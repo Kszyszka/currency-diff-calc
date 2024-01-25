@@ -1,0 +1,4 @@
+PLN
+USD
+GBP
+EUR
