@@ -1,14 +1,23 @@
 from datetime import datetime
+import baza
 
 class Faktura:
-    def __init__(self,firma, waluta, data, kwota_naleznosci) -> None:
-        self.id_faktury = None
+    def __init__(self, firma, waluta, data, kwota_naleznosci) -> None:
+        self.id_faktury = 1
         self.firma = firma
         self.waluta = waluta
         self.data = data
         self.kwota_naleznosci = kwota_naleznosci
         self.status_platnosci = kwota_naleznosci
         setattr(self, 'id_faktury', None) # Przyda się przy tworzeniu bazy faktur
+        
+    def zapisz_fakture(self):
+        id_faktury = baza.id_faktury()
+        setattr(self, "id_faktury", id_faktury)
+
+        faktura_rekord = vars(self)
+        baza.zapisz_fakture(faktura_rekord)
+        print(f"Zapisana faktura ma identyfikator: {self.id_faktury}")
         
     def czy_oplacona(self):
         if self.status_platnosci == 0:
@@ -68,6 +77,7 @@ def wprowadzenie_faktury():
         
         faktura = Faktura(dane_faktury[0], dane_faktury[1], dane_faktury[2], dane_faktury[3])
         if faktura.is_valid():
+            faktura.zapisz_fakture()
             break
     return faktura
         
@@ -77,7 +87,6 @@ def main():
     faktura = wprowadzenie_faktury()    
     
     faktura.show()
-    faktura.czy_oplacona()
        
 if __name__ == "__main__":
     main()
