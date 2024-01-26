@@ -32,13 +32,13 @@ class Faktura:
         if not self.data:
             print("Data nie może być pusta.")
             return 0
-        if not self.kwota_naleznosci and self.kwota_naleznosci != 0:
-            print("Kwota należności nie może być pusta.")
-            return 0
         try:
             datetime.strptime(self.data, "%Y-%m-%d")
         except ValueError:
             print("Niepoprawna data, powinna być w formacie YYYY-MM-DD.")
+            return 0
+        if not self.kwota_naleznosci and self.kwota_naleznosci != 0:
+            print("Kwota należności nie może być pusta.")
             return 0
         try:
             self.kwota_naleznosci = float(self.kwota_naleznosci)
@@ -56,31 +56,27 @@ class Faktura:
     #TODO status faktury, spłacanie, id faktury z pliku
     
 def wprowadzenie_faktury():
-    print("\nWprowadz dane nowej faktury rozdzielone ';' lub w osobnych linijkach:")
-    print("Firma; Waluta faktury; Data wystawienia; Kwota należności")
-    dane_faktury = []
-    wprowadzone_dane = input("\nNazwa firmy lub dane rozdzielone ';': ")
-    if ';' in wprowadzone_dane:
-        dane_faktury = [i.strip() for i in wprowadzone_dane.split(';')]
-        dane_faktury[0].strip().capitalize()
-        dane_faktury[1].strip().upper()
-        dane_faktury[3] = float(dane_faktury[3])
-    else:
-        dane_faktury.append(wprowadzone_dane.strip().capitalize())
-        dane_faktury.append(input("Waluta faktury: ").upper())
-        dane_faktury.append(input("Data wystawienia: "))
-        dane_faktury.append(input("Kwota należności: "))
-    return dane_faktury
+    while True:
+        print("\nWprowadz dane nowej faktury w osobnych linijkach:")
+        print("Firma; Waluta faktury; Data wystawienia (YYYY-MM-DD); Kwota należności")
+        dane_faktury = []
+        
+        dane_faktury.append(input("\nNazwa firmy: ").strip().capitalize())
+        dane_faktury.append(input("Waluta faktury: ").strip().upper())
+        dane_faktury.append(input("Data wystawienia: ").strip())
+        dane_faktury.append(input("Kwota należności: ").strip())
+        
+        faktura = Faktura(dane_faktury[0], dane_faktury[1], dane_faktury[2], dane_faktury[3])
+        if faktura.is_valid():
+            break
+    return faktura
         
 
 
 def main():
-    test = Faktura("Biedronka", "PLN", "2024-01-31", "2137")
-    while True:
-        test = wprowadzenie_faktury()
-        faktura = Faktura(test[0], test[1], test[2], test[3])
-        if faktura.is_valid():
-            break
+    faktura = wprowadzenie_faktury()    
+    
+    faktura.show()
     faktura.czy_oplacona()
        
 if __name__ == "__main__":
