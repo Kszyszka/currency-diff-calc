@@ -19,7 +19,7 @@ def oplac_fakture(id, wplata):
     faktura = Query()
     status_platnosci = db_faktury.search(faktura.id_faktury == id)[0]["status_platnosci"]
     print(f"Kwota przed opłatą: {status_platnosci} po przeliczeniu na PLN.\n")
-    status_platnosci -= wplata
+    status_platnosci = round(status_platnosci - wplata, 2)
     db_faktury.update({"status_platnosci": status_platnosci})
     print(f"Kwota po opłacie: {status_platnosci} po przeliczeniu na PLN.\n")
     
@@ -31,6 +31,15 @@ def wyczysc_baze_wplat():
 def wyszukaj_fakture(id):
     faktura = Query()
     return db_faktury.search(faktura.id_faktury == id)
+
+def wyszukaj_fakture_nazwa(nazwa):
+    faktura = Query()
+    return db_faktury.search(faktura.firma == nazwa)
+
+def wszystkie_faktury():
+    return db_faktury.all()[1:]
+
+wszystkie_faktury()
 
 #wyczysc_baze_faktur()
 #wyczysc_baze_wplat()
