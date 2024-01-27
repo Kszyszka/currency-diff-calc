@@ -1,0 +1,1 @@
+{"_default": {"1": {"id_faktury": 1, "wartosc_wplaty": 100.0, "waluta": "EUR", "data": "2024-01-25", "kurs": 4.3275, "wartosc_wplaty_pln": 432.74999999999994}, "2": {"id_faktury": 1, "wartosc_wplaty": 50.0, "waluta": "EUR", "data": "2024-01-25", "kurs": 4.3275, "wartosc_wplaty_pln": 216.37499999999997}}}

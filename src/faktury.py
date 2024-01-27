@@ -33,7 +33,7 @@ class Faktura:
         
     def is_valid(self):
         print("\n")
-        if not self.firma.strip():
+        if not self.firma:
             print("Nazwa firmy nie może być pusta")
             return 0
         if self.waluta not in ["USD", "EUR", "GBP"]:
