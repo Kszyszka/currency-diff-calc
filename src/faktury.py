@@ -21,6 +21,7 @@ class Faktura:
         print(f"Zapisana faktura ma identyfikator: {self.id_faktury}")
         
     def czy_oplacona(self):
+        print(f"Do zapłaty zostało: {self.status_platnosci}.")
         if self.status_platnosci == 0:
             print(f"Faktura {self.id_faktury} jest opłacona.")
             return 1
