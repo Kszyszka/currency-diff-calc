@@ -1,5 +1,5 @@
 from datetime import datetime
-import baza
+import baza, waluty
 
 class Faktura:
     def __init__(self, firma, waluta, data, kwota_naleznosci) -> None:
@@ -8,12 +8,13 @@ class Faktura:
         self.waluta = waluta
         self.data = data
         self.kwota_naleznosci = kwota_naleznosci
-        self.status_platnosci = kwota_naleznosci
-        setattr(self, 'id_faktury', None) # Przyda się przy tworzeniu bazy faktur
+        self.kurs_waluty = 0
+        self.status_platnosci = 0
         
     def zapisz_fakture(self):
-        id_faktury = baza.id_faktury()
-        setattr(self, "id_faktury", id_faktury)
+        setattr(self, "id_faktury", baza.id_faktury())
+        setattr(self, "kurs_waluty", waluty.Waluta(self.waluta, self.data).rate)
+        setattr(self, "status_platnosci", self.kwota_naleznosci * self.kurs_waluty)
 
         faktura_rekord = vars(self)
         baza.zapisz_fakture(faktura_rekord)
@@ -35,8 +36,8 @@ class Faktura:
         if not self.firma.strip():
             print("Nazwa firmy nie może być pusta")
             return 0
-        if any(char.isdigit() for char in self.waluta) or len(self.waluta) != 3:
-            print("Niepoprawna waluta (IS0 4217).")
+        if self.waluta not in ["USD", "EUR", "GBP"]:
+            print("Niepoprawna waluta (IS0 4217). Program obsługuje waluty: USD, EUR, GBP.")
             return 0
         if not self.data:
             print("Data nie może być pusta.")
@@ -84,7 +85,7 @@ def wprowadzenie_faktury():
 
 
 def main():
-    faktura = wprowadzenie_faktury()    
+    faktura = wprowadzenie_faktury()
     
     faktura.show()
        

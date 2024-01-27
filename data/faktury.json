@@ -1,0 +1,1 @@
+{"_default": {"1": {"id_faktury": 0, "firma": "", "waluta": "", "data": "", "kwota_naleznosci": 0, "status_platnosci": 0}, "2": {"id_faktury": 1, "firma": "Biedronka", "waluta": "EUR", "data": "2023-10-16", "kwota_naleznosci": 1000.0, "status_platnosci": 4488.6, "kurs_waluty": 4.4886}}}
