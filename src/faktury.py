@@ -82,13 +82,3 @@ def wprowadzenie_faktury():
             faktura.zapisz_fakture()
             break
     return faktura
-        
-
-
-def main():
-    faktura = wprowadzenie_faktury()
-    
-    faktura.show()
-       
-if __name__ == "__main__":
-    main()

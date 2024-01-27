@@ -1,5 +1,4 @@
 import requests
-from datetime import datetime
 
 class Waluta:
     def __init__(self, code, data):
@@ -25,15 +24,3 @@ class Waluta:
         # Pretty print?
         print(f"kod\tdata\tkurs")
         print(f"{self.code}\t{self.data}\t{self.rate}")
-
-def wprowadzenie_waluty(kod, data):
-    waluta = Waluta(kod, data)
-    return waluta
-
-def main():
-    waluta = Waluta(" USD ", " 2020-10-14")
-
-    waluta.show()
-
-if __name__ == "__main__":
-    main()

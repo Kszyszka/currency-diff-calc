@@ -68,5 +68,3 @@ def wprowadzenie_wplaty():
             baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty_pln)
             break
     return wplata
-
-wprowadzenie_wplaty()
