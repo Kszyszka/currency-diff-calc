@@ -4,16 +4,14 @@ from tabulate import tabulate
 db_faktury = TinyDB("data/faktury.json")
 db_wplaty = TinyDB("data/wplaty.json")
 
-if len(db_faktury.all()) == 0:
-    db_faktury.insert({"id_faktury": 0, "firma": "", "waluta": "", "data": "", "kwota_naleznosci": 0, "status_platnosci": 0, "kurs_waluty": 0})
-    
-if len(db_wplaty.all()) == 0:
-    db_wplaty.insert({"id_wplaty": 0, "id_faktury": 0, "wartosc_wplaty": 0, "waluta": "", "data": "", "kurs": 0, "wartosc_wplaty_pln": 0})
-
 def id_faktury():
+    if len(db_faktury.all()) == 0:
+        db_faktury.insert({"id_faktury": 0, "firma": "", "waluta": "", "data": "", "kwota_naleznosci": 0, "status_platnosci": 0, "kurs_waluty": 0})
     return(db_faktury.all()[-1]['id_faktury'] + 1)
 
 def id_wplaty():
+    if len(db_wplaty.all()) == 0:
+        db_wplaty.insert({"id_wplaty": 0, "id_faktury": 0, "wartosc_wplaty": 0, "waluta": "", "data": "", "kurs": 0, "wartosc_wplaty_pln": 0})
     return(db_wplaty.all()[-1]['id_wplaty'] + 1)
 
 def zapisz_fakture(faktura):
@@ -59,9 +57,19 @@ def usun_wplate(id):
         return 0
     
 def wyczysc_baze_faktur():
-    db_faktury.truncate()
+    decyzja = input("Czy na pewno chcesz wyczyścić bazę faktur? (TAK/NIE): ").lower()
+    if decyzja == "tak":
+        db_faktury.truncate()
+        print("Baza db_faktury (faktury.json) została wyczyszczona.")
+    else:
+        print("Baza NIE została wyczyszczona.")
 def wyczysc_baze_wplat():
-    db_wplaty.truncate()
+    decyzja = input("Czy na pewno chcesz wyczyścić bazę wpłat? (TAK/NIE): ").lower()
+    if decyzja == "tak":
+        db_wplaty.truncate()
+        print("Baza db_wplaty (wplaty.json) została wyczyszczona.")
+    else:
+        print("Baza NIE została wyczyszczona.")
     
 def wyszukaj_fakture(id):
     faktura = Query()
@@ -81,6 +89,3 @@ def wyszukaj_wplate_id_faktury(id):
 
 def wszystkie_faktury():
     return db_faktury.all()[1:]
-
-#wyczysc_baze_faktur()
-#wyczysc_baze_wplat()

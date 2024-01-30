@@ -131,4 +131,3 @@ def roznice_kursowe():
             print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
         else:
             print("Wybrana wpłata oraz faktura są w innych walutach, nie da się wyliczyć różnic kursowych.")
-roznice_kursowe()

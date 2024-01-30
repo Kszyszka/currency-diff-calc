@@ -17,7 +17,7 @@ def zarzadzanie_fakturami():
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
     
     while True:
-        print("\nZARZĄDZANIE FAKTURAMI")
+        print("ZARZĄDZANIE FAKTURAMI")
         
         for key in opcje:
             print(opcje[key][0])
@@ -44,12 +44,12 @@ def zarzadzanie_wplatami():
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
     
     while True:
-        print("\nZARZĄDZANIE WPŁATAMI")
+        print("ZARZĄDZANIE WPŁATAMI")
         
         for key in opcje:
                 print(opcje[key][0])
             
-        user_input = input("\nWybierz opcję 1, 2, 3, 4, 5: ").strip().lower()
+        user_input = input("\nWybierz opcję 1, 2, 3, 4: ").strip().lower()
         system('cls')
         system('clear')
         try:
@@ -70,12 +70,12 @@ def roznice_kursowe():
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
     
     while True:
-        print("\nRÓŻNICE KURSOWE")
+        print("RÓŻNICE KURSOWE")
         
         for key in opcje:
                 print(opcje[key][0])
             
-        user_input = input("\nWybierz opcję 1, 2, 3, 4, 5: ").strip().lower()
+        user_input = input("\nWybierz opcję 1, 2, 3: ").strip().lower()
         system('cls')
         system('clear')
         try:
@@ -88,7 +88,26 @@ def roznice_kursowe():
 def zarzadzanie_bazami():
     system('cls')
     system('clear')
-    print("\nZARZĄDZANIE BAZAMI DANYCH\n")
+    
+    while True:
+        print("ZARZĄDZANIE BAZAMI DANYCH")
+        opcje = {'0': ["\nMożliwe funkcje:", ""],
+                 '1': ["1. Wyczyść bazę faktur.", baza.wyczysc_baze_faktur],
+                 '2': ["2. Wyczyść bazę wpłat.", baza.wyczysc_baze_wplat],
+                 'back': ["'Back' - Cofnij do poprzedniego menu.", main],
+                 'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+        
+        for key in opcje:
+                print(opcje[key][0])
+            
+        user_input = input("\nWybierz opcję 1, 2: ").strip().lower()
+        system('cls')
+        system('clear')
+        try:
+            opcje[user_input][1]()
+        except KeyError:
+            print('Wybrana błędna opcja.')
+        input()
     
     
 
