@@ -35,7 +35,7 @@ def oplac_fakture(id, wplata, wplata_pln, waluta, data, kurs):
     print(f"Kwota po opłacie: {status_platnosci} po przeliczeniu na PLN.")
     
     if rekord["waluta"] == waluta:
-        tabela = [["Data faktury", "Data spłaty", "Waluta", "Różnica kursowa"],
+        tabela = [["Data faktury", "Data wpłaty", "Waluta", "Różnica kursowa"],
                   [rekord["data"], data, waluta, "X"],
                   [rekord["kurs_waluty"], kurs, waluta, rekord["kurs_waluty"] - kurs]]
         print(f"Faktura opłacona w tej samej walucie, różnica kursowa wynosi:")

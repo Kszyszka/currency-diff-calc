@@ -32,11 +32,6 @@ class Waluta:
             print("Niepoprawna data, powinna być w formacie YYYY-MM-DD.")
             return 0
         return 1
-    
-    def show(self):
-        # Pretty print?
-        print(f"kod\tdata\tkurs")
-        print(f"{self.code}\t{self.data}\t{self.rate}")
         
 def wprowadzenie_waluty():
     while True:
@@ -64,3 +59,9 @@ def roznica_kursowa():
         print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
     else:
         print("Podane zostały różne waluty, nie można wyliczyć różnicy kursowej.")
+        
+def konkretna_data():
+    waluta = wprowadzenie_waluty()
+    tabela = [["Data", "Waluta", "Kurs"],
+              [waluta.data, waluta.code, waluta.rate]]
+    print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))

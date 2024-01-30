@@ -1,5 +1,6 @@
 from datetime import datetime
 import baza, waluty
+from tabulate import tabulate
 
 class Wplata:
     def __init__(self, id_faktury, wartosc_wplaty, waluta, data):
@@ -79,7 +80,7 @@ def wyszukaj_wplate_po_id():
         print("Zły identyfikator Wpłaty.")
         return 0
     wynik = baza.wyszukaj_wplate(id)
-    if wynik:
+    if len(wynik) != 0:
         wplata = Wplata(wynik[0]["id_faktury"], wynik[0]["wartosc_wplaty"], wynik[0]["waluta"], wynik[0]["data"])
         setattr(wplata, "id_wplaty", wynik[0]["id_wplaty"])
         setattr(wplata, "kurs", wynik[0]["kurs"])
@@ -91,7 +92,7 @@ def wyszukaj_wplate_po_id():
         
 def wyszukaj_wplate_po_id_faktury():
     try:
-        id = int(input("Wprowadź ID wyszukiwanej Faktury: ").strip())
+        id = int(input("Wprowadź ID wyszukiwanej Faktury poszukiwanych wpłat: ").strip())
     except ValueError:
         print("Zły identyfikator Faktury.")
         return 0
@@ -117,3 +118,17 @@ def usun_wplate():
     wynik = baza.usun_wplate(id)
     if not wynik:
         print("Nie znaleziono Wpłaty o podanym ID.")
+        
+def roznice_kursowe():
+    wplata = wyszukaj_wplate_po_id()
+    if wplata:
+        faktura = baza.wyszukaj_fakture(wplata.id_faktury)[0]
+    
+        if wplata.waluta == faktura["waluta"]:
+            tabela = [["Data faktury", "Data wpłaty", "Waluta", "Różnica kursowa"],
+                    [faktura["data"], wplata.data, wplata.waluta, "X"],
+                    [faktura["kurs_waluty"], wplata.kurs, wplata.waluta, faktura["kurs_waluty"] - wplata.kurs]]
+            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+        else:
+            print("Wybrana wpłata oraz faktura są w innych walutach, nie da się wyliczyć różnic kursowych.")
+roznice_kursowe()

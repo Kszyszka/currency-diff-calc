@@ -64,8 +64,8 @@ def roznice_kursowe():
     
     opcje = {'0': ["\nMożliwe funkcje:", ""],
              '1': ["1. Oblicz różnicę kursową dwóch dowolnych dat.", waluty.roznica_kursowa],
-             '2': ["2. Oblicz różnicę kursową pomiędzy Fakturą (id faktury), a wpłatą (id wpłaty).", ],
-             '3': ["3. Sprawdź kurs podanej waluty konkretnego dnia.", ],
+             '2': ["2. Oblicz różnicę kursową pomiędzy Fakturą (id faktury), a wpłatą (id wpłaty).", wplaty.roznice_kursowe],
+             '3': ["3. Sprawdź kurs podanej waluty konkretnego dnia.", waluty.konkretna_data],
              'back': ["'Back' - Cofnij do poprzedniego menu.", main],
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
     
