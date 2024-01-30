@@ -57,6 +57,7 @@ def zarzadzanie_wplatami():
             opcje[user_input][1]()
         except KeyError:
             print('Wybrana błędna opcja.')
+        input()
     
 def roznice_kursowe():
     system('cls')
@@ -89,6 +90,7 @@ def main():
             opcje[user_input][1]()
         except KeyError:
             print('Wybrana błędna opcja.')
+        input()
             
         
     

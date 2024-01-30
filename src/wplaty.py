@@ -68,6 +68,6 @@ def wprowadzenie_wplaty():
         wplata = Wplata(dane_wplaty[0], dane_wplaty[1], dane_wplaty[2], dane_wplaty[3])
         if wplata.is_valid():
             wplata.zapisz_wplate()
-            baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty_pln)
+            baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty, wplata.wartosc_wplaty_pln, wplata.waluta, wplata.data, wplata.kurs)
             break
     return wplata
