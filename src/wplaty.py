@@ -107,3 +107,13 @@ def wyszukaj_wplate_po_id_faktury():
         print("Nie znaleziono Wpłat o podanym ID Faktury.")
         return 0
     return 1
+
+def usun_wplate():
+    try:
+        id = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
+    except ValueError:
+        print("Zły identyfikator Wpłaty.")
+        return 0
+    wynik = baza.usun_wplate(id)
+    if not wynik:
+        print("Nie znaleziono Wpłaty o podanym ID.")

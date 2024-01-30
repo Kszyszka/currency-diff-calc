@@ -34,13 +34,13 @@ def zarzadzanie_fakturami():
 def zarzadzanie_wplatami():
     system('cls')
     system('clear')
-    print("\nZARZĄDZANIE WPŁATAMI\n")
+    print("\nZARZĄDZANIE WPŁATAMI")
     
     opcje = {'0': ["\nMożliwe funkcje:", ""],
              '1': ["1. Dodaj nową wpłatę.", wplaty.wprowadzenie_wplaty],
              '2': ["2. Wyszukaj wpłaty po ID Wpłaty.", wplaty.wyszukaj_wplate_po_id],
              '3': ["3. Wyszukaj wpłatę po ID Faktury.", wplaty.wyszukaj_wplate_po_id_faktury],
-             '4': ["4. Usuń wpłatę.", ],
+             '4': ["4. Usuń wpłatę.", wplaty.usun_wplate],
              'back': ["'Back' - Cofnij do poprzedniego menu.", main],
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
     

@@ -26,17 +26,35 @@ def oplac_fakture(id, wplata, wplata_pln, waluta, data, kurs):
     faktura = Query()
     rekord = db_faktury.search(faktura.id_faktury == id)[0]
     status_platnosci = rekord["status_platnosci"]
+    
     print(f"Kwota przed opłatą: {status_platnosci} po przeliczeniu na PLN.")
     status_platnosci = round(status_platnosci - wplata_pln, 2)
-    db_faktury.update({"status_platnosci": status_platnosci})
+    db_faktury.update({"status_platnosci": status_platnosci}, faktura.id_faktury == id)
+    
     print(f"Opłacono: {wplata} {waluta}, w przeliczeniu: {wplata_pln} PLN po kursie {kurs} w dniu {data}.")
     print(f"Kwota po opłacie: {status_platnosci} po przeliczeniu na PLN.")
+    
     if rekord["waluta"] == waluta:
         tabela = [["Data faktury", "Data spłaty", "Waluta", "Różnica kursowa"],
                   [rekord["data"], data, waluta, "X"],
                   [rekord["kurs_waluty"], kurs, waluta, rekord["kurs_waluty"] - kurs]]
         print(f"Faktura opłacona w tej samej walucie, różnica kursowa wynosi:")
         print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+        
+def usun_wplate(id):
+    faktura = Query()
+    wplata = Query()
+    wynik = db_wplaty.search(wplata.id_wplaty == id)[0]
+    if wynik:
+        wartosc = wynik["wartosc_wplaty_pln"]
+        id_faktury_wynik = wynik["id_faktury"]
+        status_platnosci_new = db_faktury.search(faktura.id_faktury == id_faktury_wynik)[0]["status_platnosci"] + wartosc
+        db_faktury.update({"status_platnosci": status_platnosci_new}, faktura.id_faktury == id_faktury_wynik)
+        print(f"Wpłata {id} o wartości {wartosc} PLN została usunięta. Należność została przywrócona do Faktury {id_faktury_wynik}.")
+        db_wplaty.remove(wplata.id_wplaty == id)
+        return 1
+    else:
+        return 0
     
 def wyczysc_baze_faktur():
     db_faktury.truncate()
