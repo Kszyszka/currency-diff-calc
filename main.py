@@ -38,8 +38,8 @@ def zarzadzanie_wplatami():
     
     opcje = {'0': ["\nMożliwe funkcje:", ""],
              '1': ["1. Dodaj nową wpłatę.", wplaty.wprowadzenie_wplaty],
-             '2': ["2. Wyszukaj wpłaty po ID Faktury.", ],
-             '3': ["3. Wyszukaj wpłatę.", ],
+             '2': ["2. Wyszukaj wpłaty po ID Wpłaty.", wplaty.wyszukaj_wplate_po_id],
+             '3': ["3. Wyszukaj wpłatę po ID Faktury.", wplaty.wyszukaj_wplate_po_id_faktury],
              '4': ["4. Usuń wpłatę.", ],
              'back': ["'Back' - Cofnij do poprzedniego menu.", main],
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}

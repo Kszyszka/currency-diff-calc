@@ -71,3 +71,39 @@ def wprowadzenie_wplaty():
             baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty, wplata.wartosc_wplaty_pln, wplata.waluta, wplata.data, wplata.kurs)
             break
     return wplata
+
+def wyszukaj_wplate_po_id():
+    try:
+        id = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
+    except ValueError:
+        print("Zły identyfikator Wpłaty.")
+        return 0
+    wynik = baza.wyszukaj_wplate(id)
+    if wynik:
+        wplata = Wplata(wynik[0]["id_faktury"], wynik[0]["wartosc_wplaty"], wynik[0]["waluta"], wynik[0]["data"])
+        setattr(wplata, "id_wplaty", wynik[0]["id_wplaty"])
+        setattr(wplata, "kurs", wynik[0]["kurs"])
+        setattr(wplata, "wartosc_wplaty_pln", wynik[0]["wartosc_wplaty_pln"])
+        print(vars(wplata))
+        return wplata
+    else:
+        print("Nie znaleziono Wpłaty o podanym ID.")
+        
+def wyszukaj_wplate_po_id_faktury():
+    try:
+        id = int(input("Wprowadź ID wyszukiwanej Faktury: ").strip())
+    except ValueError:
+        print("Zły identyfikator Faktury.")
+        return 0
+    wynik = baza.wyszukaj_wplate_id_faktury(id)
+    if wynik:
+        for i in wynik:
+            wplata = Wplata(i["id_faktury"], i["wartosc_wplaty"], i["waluta"], i["data"])
+            setattr(wplata, "id_wplaty", i["id_wplaty"])
+            setattr(wplata, "kurs", i["kurs"])
+            setattr(wplata, "wartosc_wplaty_pln", i["wartosc_wplaty_pln"])
+            print(vars(wplata))
+    else:
+        print("Nie znaleziono Wpłat o podanym ID Faktury.")
+        return 0
+    return 1

@@ -14,7 +14,7 @@ def id_faktury():
     return(db_faktury.all()[-1]['id_faktury'] + 1)
 
 def id_wplaty():
-    return(db_wplaty.all()[-1]['id_faktury'] + 1)
+    return(db_wplaty.all()[-1]['id_wplaty'] + 1)
 
 def zapisz_fakture(faktura):
     db_faktury.insert(faktura)
@@ -51,10 +51,16 @@ def wyszukaj_fakture_nazwa(nazwa):
     faktura = Query()
     return db_faktury.search(faktura.firma == nazwa)
 
+def wyszukaj_wplate(id):
+    wplata = Query()
+    return db_wplaty.search(wplata.id_wplaty == id)
+
+def wyszukaj_wplate_id_faktury(id):
+    wplata = Query()
+    return db_wplaty.search(wplata.id_faktury == id)
+
 def wszystkie_faktury():
     return db_faktury.all()[1:]
-
-wszystkie_faktury()
 
 #wyczysc_baze_faktur()
 #wyczysc_baze_wplat()

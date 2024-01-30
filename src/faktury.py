@@ -87,7 +87,6 @@ def wprowadzenie_faktury():
 def wyszukaj_fakture_po_id():
     try:
         id = int(input("Wprowadź ID wyszukiwanej Faktury: ").strip())
-        print
     except ValueError:
         print("Zły identyfikator Faktury.")
         return 0
