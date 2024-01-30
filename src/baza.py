@@ -40,6 +40,8 @@ def oplac_fakture(id, wplata, wplata_pln, waluta, data, kurs):
                   [rekord["kurs_waluty"], kurs, waluta, rekord["kurs_waluty"] - kurs]]
         print(f"Faktura opłacona w tej samej walucie, różnica kursowa wynosi:")
         print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+    else:
+        print("Wpłata została wykonana w innej walucie niż podana na fakturze. Zostanie opłacona zgodnie z jej kursem, jednak niemożliwe jest wyliczenie róznic kursowych.")
         
 def usun_wplate(id):
     faktura = Query()

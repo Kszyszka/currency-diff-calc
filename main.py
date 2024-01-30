@@ -34,7 +34,6 @@ def zarzadzanie_fakturami():
 def zarzadzanie_wplatami():
     system('cls')
     system('clear')
-    print("\nZARZĄDZANIE WPŁATAMI")
     
     opcje = {'0': ["\nMożliwe funkcje:", ""],
              '1': ["1. Dodaj nową wpłatę.", wplaty.wprowadzenie_wplaty],
@@ -62,12 +61,36 @@ def zarzadzanie_wplatami():
 def roznice_kursowe():
     system('cls')
     system('clear')
-    print("\nRÓŻNICE KURSOWE\n")
+    
+    opcje = {'0': ["\nMożliwe funkcje:", ""],
+             '1': ["1. Oblicz różnicę kursową dwóch dowolnych dat.", waluty.roznica_kursowa],
+             '2': ["2. Oblicz różnicę kursową pomiędzy Fakturą (id faktury), a wpłatą (id wpłaty).", ],
+             '3': ["3. Sprawdź kurs podanej waluty konkretnego dnia.", ],
+             'back': ["'Back' - Cofnij do poprzedniego menu.", main],
+             'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+    
+    while True:
+        print("\nRÓŻNICE KURSOWE")
+        
+        for key in opcje:
+                print(opcje[key][0])
+            
+        user_input = input("\nWybierz opcję 1, 2, 3, 4, 5: ").strip().lower()
+        system('cls')
+        system('clear')
+        try:
+            opcje[user_input][1]()
+        except KeyError:
+            print('Wybrana błędna opcja.')
+        input()
+    
     
 def zarzadzanie_bazami():
     system('cls')
     system('clear')
     print("\nZARZĄDZANIE BAZAMI DANYCH\n")
+    
+    
 
 def main():    
     opcje = {'0': ["\nMożliwe funkcje:", ""],
