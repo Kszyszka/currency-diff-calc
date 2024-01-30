@@ -3,6 +3,7 @@ import baza, waluty
 
 class Wplata:
     def __init__(self, id_faktury, wartosc_wplaty, waluta, data):
+        self.id_wplaty = 1
         self.id_faktury = id_faktury
         self.wartosc_wplaty = wartosc_wplaty
         self.waluta = waluta
@@ -45,11 +46,13 @@ class Wplata:
         return 1
     
     def zapisz_wplate(self):
+        setattr(self, "id_wplaty", baza.id_wplaty())
         setattr(self, "kurs", waluty.Waluta(self.waluta, self.data).rate)
         setattr(self, "wartosc_wplaty_pln", round(self.wartosc_wplaty * self.kurs, 2))
 
         wplata_rekord = vars(self)
         baza.zapisz_wplate(wplata_rekord)
+        print(f"Zapisana wpłata ma identyfikator: {self.id_wplaty}")
     
 def wprowadzenie_wplaty():
     while True:

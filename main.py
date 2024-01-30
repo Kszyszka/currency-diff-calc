@@ -37,21 +37,26 @@ def zarzadzanie_wplatami():
     print("\nZARZĄDZANIE WPŁATAMI\n")
     
     opcje = {'0': ["\nMożliwe funkcje:", ""],
-             '1': ["1. Dodaj nową wpłatę.", ],
+             '1': ["1. Dodaj nową wpłatę.", wplaty.wprowadzenie_wplaty],
              '2': ["2. Wyszukaj wpłaty po ID Faktury.", ],
              '3': ["3. Wyszukaj wpłatę.", ],
              '4': ["4. Usuń wpłatę.", ],
              'back': ["'Back' - Cofnij do poprzedniego menu.", main],
              'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
     
-    for key in opcje:
-            print(opcje[key][0])
+    while True:
+        print("\nZARZĄDZANIE WPŁATAMI")
         
-    user_input = input("\nWybierz opcję 1, 2, 3, 4, 5: ").strip().lower()
-    try:
-        opcje[user_input][1]()
-    except KeyError:
-        print('Wybrana błędna opcja.')
+        for key in opcje:
+                print(opcje[key][0])
+            
+        user_input = input("\nWybierz opcję 1, 2, 3, 4, 5: ").strip().lower()
+        system('cls')
+        system('clear')
+        try:
+            opcje[user_input][1]()
+        except KeyError:
+            print('Wybrana błędna opcja.')
     
 def roznice_kursowe():
     system('cls')
