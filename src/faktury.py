@@ -86,6 +86,12 @@ def wprowadzenie_faktury():
             break
     return faktura
 
+def wprowadzenie_faktury_z_pliku(nazwa_firmy, waluta, data, kwota_naleznosci):
+    faktura = Faktura(nazwa_firmy, waluta, data, kwota_naleznosci)
+    if faktura.is_valid():
+            faktura.zapisz_fakture()
+    return faktura
+
 def wyszukaj_fakture_po_id():
     try:
         id = int(input("Wprowadź ID wyszukiwanej Faktury: ").strip())

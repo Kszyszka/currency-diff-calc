@@ -78,6 +78,12 @@ def wprowadzenie_wplaty():
             print("Coś poszło nie tak.")
             return 0
 
+def wprowadzenie_wplaty_z_pliku(id_faktury, wartosc_wplaty, waluta, data):
+    wplata = Wplata(id_faktury, wartosc_wplaty, waluta, data)
+    if wplata.is_valid():
+        wplata.zapisz_wplate()
+        baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty, wplata.wartosc_wplaty_pln, wplata.waluta, wplata.data, wplata.kurs)
+
 def wyszukaj_wplate_po_id():
     try:
         id = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
