@@ -14,6 +14,7 @@ class Wplata:
         self.waluta = waluta
         self.data = data
         self.kurs = 0
+        self.wartosc_wplaty_pln = 0
 
     def is_valid(self):
         '''Walidacja wszystkich wprowadzonych pól wpłaty.'''

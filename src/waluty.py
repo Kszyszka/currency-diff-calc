@@ -1,22 +1,22 @@
-import requests
+'''Moduł służący do obsługi walut oraz API.'''
 from datetime import datetime
 from tabulate import tabulate
+import requests
 
 class Waluta:
     def __init__(self, code, data):
         self.code = code.strip().upper()
         self.data = data.strip()
-        
+
         url = f"http://api.nbp.pl/api/exchangerates/rates/C/{self.code}/{self.data}/"
-        r = requests.get(url, headers={"Accept": "application/json"})
-        global status_polaczenia
+        r = requests.get(url, headers={"Accept": "application/json"}, timeout=10)
         status_polaczenia = r.status_code
 
         if status_polaczenia == 200:
             self.rate = float(r.json()["rates"][0]["bid"]) # Kurs sprzedaży
         elif status_polaczenia == 404:
             print("Błędna data - brak kursu.")
-            self.rate = 0            
+            self.rate = 0
         else:
             print(f"Błędnie podany kod waluty lub za duży zakres danych - błąd połączenia z API.{status_polaczenia}")
             print(url)
@@ -32,16 +32,16 @@ class Waluta:
             print("Niepoprawna data, powinna być w formacie YYYY-MM-DD.")
             return 0
         return 1
-        
+
 def wprowadzenie_waluty():
     while True:
         print("Wprowadz dane waluty w osobnych linijkach:")
         print("Kod waluty; Data wystawienia (YYYY-MM-DD)")
         dane_waluty = []
-        
+
         dane_waluty.append(input("\nKod waluty: ").strip().upper())
         dane_waluty.append(input("Data wystawienia: ").strip())
-        
+
         waluta = Waluta(dane_waluty[0], dane_waluty[1])
         if waluta.is_valid():
             break
@@ -62,7 +62,7 @@ def roznica_kursowa():
             print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
     else:
         print("Podane zostały różne waluty, nie można wyliczyć różnicy kursowej.\n")
-        
+
 def konkretna_data():
     waluta = wprowadzenie_waluty()
     tabela = [["Data", "Waluta", "Kurs"],
