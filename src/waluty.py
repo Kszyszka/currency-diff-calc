@@ -4,6 +4,8 @@ from tabulate import tabulate
 import requests
 
 class Waluta:
+    '''Klasa reprezentująca konkretną walutę w dacie.'''
+
     def __init__(self, code, data):
         self.code = code.strip().upper()
         self.data = data.strip()
@@ -18,11 +20,13 @@ class Waluta:
             print("Błędna data - brak kursu.")
             self.rate = 0
         else:
-            print(f"Błędnie podany kod waluty lub za duży zakres danych - błąd połączenia z API.{status_polaczenia}")
-            print(url)
+            print("Błędnie podany kod waluty lub za duży zakres danych.", end=" ")
+            print(f"- błąd połączenia z API.{status_polaczenia}", url)
             self.rate = 0
 
     def is_valid(self):
+        '''Walidacja wszystkich wprowadzonych pól waluty.'''
+
         if self.code not in ["USD", "EUR", "GBP"]:
             print("Niepoprawna waluta (IS0 4217). Program obsługuje waluty: USD, EUR, GBP.")
             return 0
@@ -34,6 +38,8 @@ class Waluta:
         return 1
 
 def wprowadzenie_waluty():
+    '''Wprowadzenie waluty i walidacja danych w trybie interaktywnym.'''
+
     while True:
         print("Wprowadz dane waluty w osobnych linijkach:")
         print("Kod waluty; Data wystawienia (YYYY-MM-DD)")
@@ -48,22 +54,25 @@ def wprowadzenie_waluty():
     return waluta
 
 def roznica_kursowa():
+    '''Wyliczenie różnic kursowych tej samej waluty w różnych datach.'''
+
     print("Pierwsza waluta:")
-    waluta_pierwsza = wprowadzenie_waluty()
+    waluta_1 = wprowadzenie_waluty()
     print("\nDruga waluta:")
-    waluta_druga = wprowadzenie_waluty()
-    if waluta_pierwsza.code == waluta_druga.code:
-        if waluta_pierwsza.rate == 0 or waluta_druga.rate == 0:
+    waluta_2 = wprowadzenie_waluty()
+    if waluta_1.code == waluta_2.code:
+        if waluta_1.rate == 0 or waluta_2.rate == 0:
             print("Jedna z podanych walut lub dat jest błędna, błąd API.")
         else:
             tabela = [["Data1", "Data2", "Waluta", "Różnica kursowa"],
-                    [waluta_pierwsza.data, waluta_druga.data, waluta_pierwsza.code, "X"],
-                    [waluta_pierwsza.rate, waluta_druga.rate, waluta_pierwsza.code, waluta_pierwsza.rate - waluta_druga.rate]]
+                    [waluta_1.data, waluta_2.data, waluta_1.code, "X"],
+                    [waluta_1.rate, waluta_2.rate, waluta_1.code, waluta_1.rate - waluta_2.rate]]
             print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
     else:
         print("Podane zostały różne waluty, nie można wyliczyć różnicy kursowej.\n")
 
 def konkretna_data():
+    '''Wypisanie danych waluty w konkretnej dacie.'''
     waluta = wprowadzenie_waluty()
     tabela = [["Data", "Waluta", "Kurs"],
               [waluta.data, waluta.code, waluta.rate]]

@@ -1,9 +1,12 @@
+'''Główny moduł programu.'''
 from sys import path, argv
-path.insert(1, "src")
-
+path.insert(1, "src") # Wymagane do spięcia reszty modułów, zignorowany Warning od Pylint
 import menu
 
+
 def main():
+    '''Główna funkcja - decyduje o trybie programu i dalszym działaniu.'''
+
     argumenty = argv[1:]
     if "-h" in argumenty or "--help" in argumenty:
         print("Witaj w programie księgowym z funkcją obliczania róznic kursowych - Autor: Krzysztof Hager 52687\n")
@@ -62,7 +65,6 @@ def main():
             print("Program przyjmuje jedynie pliki .csv")
         return 1
     menu.menu()
-        
-    
+
 if __name__ == "__main__":
     main()
