@@ -53,15 +53,18 @@ def roznica_kursowa():
     print("\nDruga waluta:")
     waluta_druga = wprowadzenie_waluty()
     if waluta_pierwsza.code == waluta_druga.code:
-        tabela = [["Data1", "Data2", "Waluta", "Różnica kursowa"],
-                  [waluta_pierwsza.data, waluta_druga.data, waluta_pierwsza.code, "X"],
-                  [waluta_pierwsza.rate, waluta_druga.rate, waluta_pierwsza.code, waluta_pierwsza.rate - waluta_druga.rate]]
-        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+        if waluta_pierwsza.rate == 0 or waluta_druga.rate == 0:
+            print("Jedna z podanych walut lub dat jest błędna, błąd API.")
+        else:
+            tabela = [["Data1", "Data2", "Waluta", "Różnica kursowa"],
+                    [waluta_pierwsza.data, waluta_druga.data, waluta_pierwsza.code, "X"],
+                    [waluta_pierwsza.rate, waluta_druga.rate, waluta_pierwsza.code, waluta_pierwsza.rate - waluta_druga.rate]]
+            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
     else:
-        print("Podane zostały różne waluty, nie można wyliczyć różnicy kursowej.")
+        print("Podane zostały różne waluty, nie można wyliczyć różnicy kursowej.\n")
         
 def konkretna_data():
     waluta = wprowadzenie_waluty()
     tabela = [["Data", "Waluta", "Kurs"],
               [waluta.data, waluta.code, waluta.rate]]
-    print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+    print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")

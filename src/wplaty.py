@@ -70,8 +70,13 @@ def wprowadzenie_wplaty():
         if wplata.is_valid():
             wplata.zapisz_wplate()
             baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty, wplata.wartosc_wplaty_pln, wplata.waluta, wplata.data, wplata.kurs)
-            break
-    return wplata
+            tabela = [["id_wplaty", "id_faktury", "wartosc_wplaty", "waluta", "data", "kurs", "wartosc_wplaty_pln"],
+                      [wplata.id_wplaty, wplata.id_faktury, wplata.wartosc_wplaty, wplata.waluta, wplata.data, wplata.kurs, str(wplata.wartosc_wplaty) + " PLN"]]
+            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+            return wplata
+        else:
+            print("Coś poszło nie tak.")
+            return 0
 
 def wyszukaj_wplate_po_id():
     try:
@@ -85,7 +90,9 @@ def wyszukaj_wplate_po_id():
         setattr(wplata, "id_wplaty", wynik[0]["id_wplaty"])
         setattr(wplata, "kurs", wynik[0]["kurs"])
         setattr(wplata, "wartosc_wplaty_pln", wynik[0]["wartosc_wplaty_pln"])
-        print(vars(wplata))
+        tabela = [["id_wplaty", "id_faktury", "wartosc_wplaty", "waluta", "data", "kurs", "wartosc_wplaty_pln"],
+                 [wplata.id_wplaty, wplata.id_faktury, wplata.wartosc_wplaty, wplata.waluta, wplata.data, wplata.kurs, str(wplata.wartosc_wplaty) + " PLN"]]
+        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'), "\n")
         return wplata
     else:
         print("Nie znaleziono Wpłaty o podanym ID.")
@@ -98,12 +105,15 @@ def wyszukaj_wplate_po_id_faktury():
         return 0
     wynik = baza.wyszukaj_wplate_id_faktury(id)
     if wynik:
+        tabela = [["id_wplaty", "id_faktury", "wartosc_wplaty", "waluta", "data", "kurs", "wartosc_wplaty_pln"]]
         for i in wynik:
             wplata = Wplata(i["id_faktury"], i["wartosc_wplaty"], i["waluta"], i["data"])
             setattr(wplata, "id_wplaty", i["id_wplaty"])
             setattr(wplata, "kurs", i["kurs"])
             setattr(wplata, "wartosc_wplaty_pln", i["wartosc_wplaty_pln"])
-            print(vars(wplata))
+            tabela2 = [wplata.id_wplaty, wplata.id_faktury, wplata.wartosc_wplaty, wplata.waluta, wplata.data, wplata.kurs, str(wplata.wartosc_wplaty_pln) + " PLN"]
+            tabela.append(tabela2)
+        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
     else:
         print("Nie znaleziono Wpłat o podanym ID Faktury.")
         return 0
@@ -116,6 +126,7 @@ def usun_wplate():
         print("Zły identyfikator Wpłaty.")
         return 0
     wynik = baza.usun_wplate(id)
+    print()
     if not wynik:
         print("Nie znaleziono Wpłaty o podanym ID.")
         

@@ -1,5 +1,6 @@
 from datetime import datetime
 import baza, waluty
+from tabulate import tabulate
 
 class Faktura:
     def __init__(self, firma, waluta, data, kwota_naleznosci) -> None:
@@ -34,6 +35,7 @@ class Faktura:
             return 0
         elif self.status_platnosci < 0:
             print(f"Faktura {self.id_faktury} jest nadpłacona o {self.status_platnosci*-1} PLN.")
+        print("\n")
         return None
         
     def is_valid(self):
@@ -96,7 +98,9 @@ def wyszukaj_fakture_po_id():
         setattr(faktura, "id_faktury", wynik[0]["id_faktury"])
         setattr(faktura, "kurs_waluty", wynik[0]["kurs_waluty"])
         setattr(faktura, "status_platnosci", wynik[0]["status_platnosci"])
-        print(vars(faktura))
+        tabela = [["id_faktury", "firma", "waluta", "data", "kurs_waluty", "status_platnosci_pln"],
+                  [faktura.id_faktury, faktura.firma, faktura.waluta, faktura.data, faktura.kurs_waluty, str(faktura.status_platnosci) + " PLN"]]
+        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'), "\n")
         return faktura
     else:
         print("Nie znaleziono Faktury o podanym ID.")
@@ -104,17 +108,22 @@ def wyszukaj_fakture_po_id():
 def wyszukaj_fakture_po_nazwie():
     nazwa = input("Wprowadź nazwę firmy szukanej Faktury: ").strip().capitalize()
     wynik = baza.wyszukaj_fakture_nazwa(nazwa)
+    tabela = [["id_faktury", "firma", "waluta", "data", "kurs_waluty", "status_platnosci_pln"]]
     if wynik:
         for i in wynik:
-            print(i)
+            tabela2 = [i["id_faktury"], i["firma"], i["waluta"], i["data"], i["kurs_waluty"], str(i["status_platnosci"]) + " PLN"]
+            tabela.append(tabela2)
+        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'), "\n")
     else:
         print("Nie znaleziono Faktury o podanej nazwie firmy.")
         
 def wypisz_wszystkie():
     faktury = baza.wszystkie_faktury()
-    
+    tabela = [["id_faktury", "firma", "waluta", "data", "kwota_naleznosci", "kurs_waluty", "status_platnosci_pln"]]
     for faktura in faktury:
-        print(faktura)
+        tabela2 = [faktura["id_faktury"], faktura["firma"], faktura["waluta"], faktura["data"], faktura["kwota_naleznosci"], faktura["kurs_waluty"], str(faktura["status_platnosci"]) + " PLN"]
+        tabela.append(tabela2)
+    print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'), "\n")
     
 def status_platnosci_po_id():
     faktura = wyszukaj_fakture_po_id()
