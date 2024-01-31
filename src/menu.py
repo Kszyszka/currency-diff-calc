@@ -1,10 +1,12 @@
-from sys import path
+'''Moduł służący do interaktywnej obsługi programu.'''
 from os import system
-path.insert(1, "src")
-
-import baza, faktury, waluty, wplaty
+import baza
+import faktury
+import waluty
+import wplaty
 
 def zarzadzanie_fakturami():
+    '''Interaktywne zarządzanie fakturami.'''
     system('cls')
     system('clear')
     opcje = {'0': ["\nMożliwe funkcje:", ""],
@@ -14,14 +16,13 @@ def zarzadzanie_fakturami():
              '4': ["4. Wypisz wszystkie faktury.", faktury.wypisz_wszystkie],
              '5': ["5. Sprawdź status płatności Faktury po ID.", faktury.status_platnosci_po_id],
              'back': ["'Back' - Cofnij do poprzedniego menu.", menu],
-             'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
-    
+             'quit': ["Program można opuścić przez 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+
     while True:
         print("ZARZĄDZANIE FAKTURAMI")
-        
-        for key in opcje:
-            print(opcje[key][0])
-        
+        for item in opcje.items():
+            print(item[1][0])
+
         user_input = input("\nWybierz opcję 1, 2, 3, 4, 5: ").strip().lower()
         system('cls')
         system('clear')
@@ -29,26 +30,26 @@ def zarzadzanie_fakturami():
             opcje[user_input][1]()
         except KeyError:
             print('Wybrana błędna opcja.')
-        
 
 def zarzadzanie_wplatami():
+    '''Interaktywne zarządzanie wpłatami.'''
     system('cls')
     system('clear')
-    
+
     opcje = {'0': ["\nMożliwe funkcje:", ""],
              '1': ["1. Dodaj nową wpłatę.", wplaty.wprowadzenie_wplaty],
              '2': ["2. Wyszukaj wpłaty po ID Wpłaty.", wplaty.wyszukaj_wplate_po_id],
              '3': ["3. Wyszukaj wpłatę po ID Faktury.", wplaty.wyszukaj_wplate_po_id_faktury],
              '4': ["4. Usuń wpłatę.", wplaty.usun_wplate],
              'back': ["'Back' - Cofnij do poprzedniego menu.", menu],
-             'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
-    
+             'quit': ["Program można opuścić przez 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+
     while True:
         print("ZARZĄDZANIE WPŁATAMI")
-        
-        for key in opcje:
-                print(opcje[key][0])
-            
+
+        for item in opcje.items():
+            print(item[1][0])
+
         user_input = input("\nWybierz opcję 1, 2, 3, 4: ").strip().lower()
         system('cls')
         system('clear')
@@ -56,24 +57,25 @@ def zarzadzanie_wplatami():
             opcje[user_input][1]()
         except KeyError:
             print('Wybrana błędna opcja.')
-    
+
 def roznice_kursowe():
+    '''Interaktywna obsługa różnic kursowych.'''
     system('cls')
     system('clear')
-    
+
     opcje = {'0': ["\nMożliwe funkcje:", ""],
              '1': ["1. Oblicz różnicę kursową dwóch dowolnych dat.", waluty.roznica_kursowa],
-             '2': ["2. Oblicz różnicę kursową pomiędzy Fakturą (id faktury), a wpłatą (id wpłaty).", wplaty.roznice_kursowe],
+             '2': ["2. Oblicz różnicę kursową pomiędzy Fakturą, a wpłatą.", wplaty.roznice_kursowe],
              '3': ["3. Sprawdź kurs podanej waluty konkretnego dnia.", waluty.konkretna_data],
              'back': ["'Back' - Cofnij do poprzedniego menu.", menu],
-             'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
-    
+             'quit': ["Program można opuścić przez 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+
     while True:
         print("RÓŻNICE KURSOWE")
-        
-        for key in opcje:
-                print(opcje[key][0])
-            
+
+        for item in opcje.items():
+            print(item[1][0])
+
         user_input = input("\nWybierz opcję 1, 2, 3: ").strip().lower()
         system('cls')
         system('clear')
@@ -81,23 +83,24 @@ def roznice_kursowe():
             opcje[user_input][1]()
         except KeyError:
             print('Wybrana błędna opcja.')
-    
-    
+
 def zarzadzanie_bazami():
+    '''Interaktywna obsługa baz danych.'''
     system('cls')
     system('clear')
-    
+
+    opcje = {'0': ["\nMożliwe funkcje:", ""],
+             '1': ["1. Wyczyść bazę faktur.", baza.wyczysc_baze_faktur],
+             '2': ["2. Wyczyść bazę wpłat.", baza.wyczysc_baze_wplat],
+             'back': ["'Back' - Cofnij do poprzedniego menu.", menu],
+             'quit': ["Program można opuścić przez 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+
     while True:
         print("ZARZĄDZANIE BAZAMI DANYCH")
-        opcje = {'0': ["\nMożliwe funkcje:", ""],
-                 '1': ["1. Wyczyść bazę faktur.", baza.wyczysc_baze_faktur],
-                 '2': ["2. Wyczyść bazę wpłat.", baza.wyczysc_baze_wplat],
-                 'back': ["'Back' - Cofnij do poprzedniego menu.", menu],
-                 'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
-        
-        for key in opcje:
-                print(opcje[key][0])
-            
+
+        for item in opcje.items():
+            print(item[1][0])
+
         user_input = input("\nWybierz opcję 1, 2: ").strip().lower()
         system('cls')
         system('clear')
@@ -105,25 +108,24 @@ def zarzadzanie_bazami():
             opcje[user_input][1]()
         except KeyError:
             print('Wybrana błędna opcja.')
-        input()
-    
-    
 
-def menu():    
+def menu():
+    '''Funkcja obsługująca główne menu użytkownika.'''
     opcje = {'0': ["\nMożliwe funkcje:", ""],
-             '1': ["1. Zarządzaj Fakturami (dodaj nową, wyszukaj aktualne, sprawdź status).", zarzadzanie_fakturami],
-             '2': ["2. Zarządzaj Wpłatami (dodaj nową, wyszukaj wpłaty faktury, cofnij wpłatę).", zarzadzanie_wplatami],
+             '1': ["1. Zarządzaj Fakturami (dodaj, wyszukaj, status).", zarzadzanie_fakturami],
+             '2': ["2. Zarządzaj Wpłatami (dodaj, wyszukaj, cofnij).", zarzadzanie_wplatami],
              '3': ["3. Sprawdź różnice kursowe pomiędzy dowolnymi datami.", roznice_kursowe],
              '4': ["4. Zarządzaj Bazą faktur lub wpłat.", zarzadzanie_bazami],
-             'quit': ["Program można opuścić kombinacją 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
-    
+             'quit': ["Program można opuścić przez 'CTRL + C' lub poprzez wpisanie 'Quit'.", quit]}
+
     while True:
         system('cls')
         system('clear')
-        print('Witaj w programie księgowym z funkcją obliczania róznic kursowych - Autor: Krzysztof Hager 52687')
-        
-        for key in opcje:
-            print(opcje[key][0])
+        print("Witaj w programie księgowym z funkcją obliczania róznic kursowych")
+        print("Autor: Krzysztof Hager 52687'")
+
+        for item in opcje.items():
+            print(item[1][0])
 
         user_input = input("\nWybierz opcję 1, 2, 3, 4: ").strip().lower()
         try:

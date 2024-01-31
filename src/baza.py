@@ -20,14 +20,14 @@ def zapisz_fakture(faktura):
 def zapisz_wplate(wplata):
     db_wplaty.insert(wplata)
     
-def oplac_fakture(id, wplata, wplata_pln, waluta, data, kurs):
+def oplac_fakture(id_faktury, wplata, wplata_pln, waluta, data, kurs):
     faktura = Query()
-    rekord = db_faktury.search(faktura.id_faktury == id)[0]
+    rekord = db_faktury.search(faktura.id_faktury == id_faktury)[0]
     status_platnosci = rekord["status_platnosci"]
     
     print(f"Kwota przed opłatą: {status_platnosci} po przeliczeniu na PLN.")
     status_platnosci = round(status_platnosci - wplata_pln, 2)
-    db_faktury.update({"status_platnosci": status_platnosci}, faktura.id_faktury == id)
+    db_faktury.update({"status_platnosci": status_platnosci}, faktura.id_faktury == id_faktury)
     
     print(f"Opłacono: {wplata} {waluta}, w przeliczeniu: {wplata_pln} PLN po kursie {kurs} w dniu {data}.")
     print(f"Kwota po opłacie: {status_platnosci} po przeliczeniu na PLN.")

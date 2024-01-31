@@ -1,18 +1,23 @@
+'''Moduł służący do obsługi wpłat.'''
 from datetime import datetime
-import baza, waluty
 from tabulate import tabulate
+import baza
+import waluty
 
 class Wplata:
-    def __init__(self, id_faktury, wartosc_wplaty, waluta, data):
+    '''Klasa reprezentująca konkretną wpłatę.'''
+
+    def __init__(self, id_faktury, wartosc_wplaty, waluta, data) -> None:
         self.id_wplaty = 1
         self.id_faktury = id_faktury
         self.wartosc_wplaty = wartosc_wplaty
         self.waluta = waluta
         self.data = data
         self.kurs = 0
-    
+
     def is_valid(self):
-        print("\n")
+        '''Walidacja wszystkich wprowadzonych pól wpłaty.'''
+
         if not self.id_faktury or self.id_faktury == 0:
             print("ID faktury nie może być puste.")
             return 0
@@ -45,8 +50,10 @@ class Wplata:
             print("Niepoprawna data, powinna być w formacie YYYY-MM-DD.")
             return 0
         return 1
-    
+
     def zapisz_wplate(self):
+        '''Uzupełnienie atrybutów zależnych od innych modułów i zapisanie wpłaty do bazy.'''
+
         setattr(self, "id_wplaty", baza.id_wplaty())
         setattr(self, "kurs", waluty.Waluta(self.waluta, self.data).rate)
         setattr(self, "wartosc_wplaty_pln", round(self.wartosc_wplaty * self.kurs, 2))
@@ -54,18 +61,20 @@ class Wplata:
         wplata_rekord = vars(self)
         baza.zapisz_wplate(wplata_rekord)
         print(f"Zapisana wpłata ma identyfikator: {self.id_wplaty}")
-    
+
 def wprowadzenie_wplaty():
+    '''Wprowadzenie wpłaty i walidacja danych w trybie interaktywnym.'''
+
     while True:
         print("\nWprowadz dane wplaty w osobnych linijkach:")
         print("Id oplacanej faktury; Wartosc wplaty; Waluta wplaty; Data wystawienia (YYYY-MM-DD).")
         dane_wplaty = []
-        
+
         dane_wplaty.append(input("\nID faktury: ").strip())
         dane_wplaty.append(input("Wartosc wplaty: ").strip())
         dane_wplaty.append(input("Waluta wplaty: ").strip().upper())
         dane_wplaty.append(input("Data wplaty: ").strip())
-        
+
         wplata = Wplata(dane_wplaty[0], dane_wplaty[1], dane_wplaty[2], dane_wplaty[3])
         if wplata.is_valid():
             wplata.zapisz_wplate()
@@ -79,18 +88,22 @@ def wprowadzenie_wplaty():
             return 0
 
 def wprowadzenie_wplaty_z_pliku(id_faktury, wartosc_wplaty, waluta, data):
+    '''Wprowadzenie wpłaty i walidacja danych w trybie wsadowym z pliku.'''
+
     wplata = Wplata(id_faktury, wartosc_wplaty, waluta, data)
     if wplata.is_valid():
         wplata.zapisz_wplate()
         baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty, wplata.wartosc_wplaty_pln, wplata.waluta, wplata.data, wplata.kurs)
 
 def wyszukaj_wplate_po_id():
+    '''Wyszukaj konkretną wpłatę w bazie po jej ID.'''
+
     try:
-        id = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
+        id_wplaty = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
     except ValueError:
         print("Zły identyfikator Wpłaty.")
         return 0
-    wynik = baza.wyszukaj_wplate(id)
+    wynik = baza.wyszukaj_wplate(id_wplaty)
     if len(wynik) != 0:
         wplata = Wplata(wynik[0]["id_faktury"], wynik[0]["wartosc_wplaty"], wynik[0]["waluta"], wynik[0]["data"])
         setattr(wplata, "id_wplaty", wynik[0]["id_wplaty"])
@@ -102,14 +115,16 @@ def wyszukaj_wplate_po_id():
         return wplata
     else:
         print("Nie znaleziono Wpłaty o podanym ID.")
-        
+
 def wyszukaj_wplate_po_id_faktury():
+    '''Wyszukaj wszystkie wpłaty powiązane z konkretnym ID faktury.'''
+
     try:
-        id = int(input("Wprowadź ID wyszukiwanej Faktury poszukiwanych wpłat: ").strip())
+        id_faktury = int(input("Wprowadź ID wyszukiwanej Faktury poszukiwanych wpłat: ").strip())
     except ValueError:
         print("Zły identyfikator Faktury.")
         return 0
-    wynik = baza.wyszukaj_wplate_id_faktury(id)
+    wynik = baza.wyszukaj_wplate_id_faktury(id_faktury)
     if wynik:
         tabela = [["id_wplaty", "id_faktury", "wartosc_wplaty", "waluta", "data", "kurs", "wartosc_wplaty_pln"]]
         for i in wynik:
@@ -126,25 +141,28 @@ def wyszukaj_wplate_po_id_faktury():
     return 1
 
 def usun_wplate():
+    '''Usuń wpłatę o konkretnym ID.'''
+
     try:
-        id = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
+        id_wplaty = int(input("Wprowadź ID wyszukiwanej Wpłaty: ").strip())
     except ValueError:
         print("Zły identyfikator Wpłaty.")
         return 0
-    wynik = baza.usun_wplate(id)
+    wynik = baza.usun_wplate(id_wplaty)
     print()
     if not wynik:
         print("Nie znaleziono Wpłaty o podanym ID.")
-        
+
 def roznice_kursowe():
+    '''Wyszukaj i wypisz różnice kursowe pomiędzy wpłatą, a jej fakturą.'''
+
     wplata = wyszukaj_wplate_po_id()
     if wplata:
         faktura = baza.wyszukaj_fakture(wplata.id_faktury)[0]
-    
         if wplata.waluta == faktura["waluta"]:
             tabela = [["Data faktury", "Data wpłaty", "Waluta", "Różnica kursowa"],
                     [faktura["data"], wplata.data, wplata.waluta, "X"],
                     [faktura["kurs_waluty"], wplata.kurs, wplata.waluta, faktura["kurs_waluty"] - wplata.kurs]]
-            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
         else:
-            print("Wybrana wpłata oraz faktura są w innych walutach, nie da się wyliczyć różnic kursowych.")
+            print("Wybrana wpłata oraz faktura są w innych walutach, nie da się wyliczyć różnic kursowych.\n")

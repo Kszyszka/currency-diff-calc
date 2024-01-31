@@ -22,7 +22,7 @@ def main():
             return 0
         if plik[-3:] == "csv":
             try:
-                with open(plik, "r") as plik:
+                with open(plik, "r", encoding="UTF-8") as plik:
                     for i in plik.readlines():
                         dane = i.split(',')
                         dane_oczyszczone = [s.strip() for s in dane]
@@ -46,7 +46,7 @@ def main():
             return 0
         if plik[-3:] == "csv":
             try:
-                with open(plik, "r") as plik:
+                with open(plik, "r", encoding="UTF-8") as plik:
                     for i in plik.readlines():
                         dane = i.split(',')
                         dane_oczyszczone = [s.strip() for s in dane]
