@@ -11,6 +11,7 @@ Program korzysta z kilku bibliotek, które nie są wbudowane w czystego Pythona.
 - **Tabulate** - pretty print tabeli
 - **TinyDB** - obsługa minimalistycznych baz danych z plików .json
 - **Datetime** - walidacja wprowadzonych danych z zakresu dat
+- **Requests** - obsługa API
 
 Należy pobrać całe repozytorium, oraz pobrać powyższe zależności.\
 Przed pierwszym uruchomieniem programu niezbędne jest ich zainstalowanie, poprzez wykorzystanie pliku ***"setup/requirements.txt"***:
