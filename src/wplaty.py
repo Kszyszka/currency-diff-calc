@@ -52,6 +52,10 @@ class Wplata:
         except ValueError:
             print("Niepoprawna data, powinna być w formacie YYYY-MM-DD.")
             return 0
+        if self.kurs == 0:
+            # Raportowanie błędu jest w module obsługi API (waluty.py)
+            print("Niepoprawna data - błąd API.")
+            return 0
         return 1
 
     def zapisz_wplate(self):
@@ -89,7 +93,7 @@ def wprowadzenie_wplaty():
             print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
             return wplata
         else:
-            print("Coś poszło nie tak.")
+            print("Coś poszło nie tak.\n")
             return 0
 
 def wprowadzenie_wplaty_z_pliku(id_oplacanej_faktury, wartosc_wplaty, waluta, data):
