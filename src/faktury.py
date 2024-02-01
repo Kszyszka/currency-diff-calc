@@ -8,17 +8,21 @@ class Faktura:
     '''Klasa reprezentująca konkretną fakturę.'''
 
     def __init__(self, firma, waluta, data, kwota_naleznosci) -> None:
+        # ID faktury jest dynamicznie zaciągane z bazy przy zapisie i odczycie.
         self.id_faktury = 1
         self.firma = firma
         self.waluta = waluta
         self.data = data
         self.kwota_naleznosci = kwota_naleznosci
+        # Kurs oraz status płatności są zaciągnięte z waluty.py po API
+        # Po poprawnym połączeniu dopiero obliczane są wartości atrybutów
         self.kurs_waluty = 0
         self.status_platnosci = 0
 
     def zapisz_fakture(self):
         '''Uzupełnienie atrybutów zależnych od innych modułów i zapisanie faktury do bazy.'''
 
+        # Dynamiczne zaciągnięcie wartości atrybutów z bazy oraz API
         setattr(self, "id_faktury", baza.id_faktury())
         setattr(self, "kurs_waluty", waluty.Waluta(self.waluta, self.data).rate)
         setattr(self, "status_platnosci", round(self.kwota_naleznosci * self.kurs_waluty, 2))
@@ -34,6 +38,7 @@ class Faktura:
     def czy_oplacona(self):
         '''Wypisz status opłacenia faktury.'''
 
+        # Wartość pola db_faktury[id][status_platnosci]
         print(f"Do zapłaty zostało: {self.status_platnosci}.")
         if self.status_platnosci == 0:
             print(f"Faktura {self.id_faktury} jest opłacona. Nie zostało nic do spłaty.\n")
@@ -52,12 +57,15 @@ class Faktura:
             print("Nazwa firmy nie może być pusta")
             return 0
         if self.waluta not in ["USD", "EUR", "GBP"]:
+            # W teorii program działa dla dowolnej poprawnej waluty
+            # Dla uproszczenia sprawy, obsługa 3 walut pozwala na mniej problemów z API
             print("Niepoprawna waluta (IS0 4217). Program obsługuje waluty: USD, EUR, GBP.")
             return 0
         if not self.data:
             print("Data nie może być pusta.")
             return 0
         try:
+            # YYYY-MM-DD
             datetime.strptime(self.data, "%Y-%m-%d")
         except ValueError:
             print("Niepoprawna data, powinna być w formacie YYYY-MM-DD.")
@@ -88,6 +96,8 @@ def wprowadzenie_faktury():
 
         faktura = Faktura(dane_faktury[0], dane_faktury[1], dane_faktury[2], dane_faktury[3])
         if faktura.is_valid():
+            # Dynamiczne atrybuty zaciągane są dopiero po zwalidowaniu
+            # Zapis możliwy jest również dopiero po walidacji i uzupełnieniu pól
             faktura.zapisz_fakture()
             break
     return faktura
@@ -111,6 +121,11 @@ def wyszukaj_fakture_po_id():
     wynik = baza.wyszukaj_fakture(id_faktury)
     if wynik:
         faktura = Faktura(wynik[0]["firma"], wynik[0]["waluta"], wynik[0]["data"], wynik[0]["kwota_naleznosci"])
+        # Zaciągnięcie dynamicznych atrybutów z bazy
+        # Z perspektywy czasu, wystarczyło dodać opcjonalne atrybuty klasy
+        # Zamiast nadmiernie obciążać bazę
+        # Naprawi się w wersji 2.0 - nie ma czasu :)
+        # No cóż, mistakes were made
         setattr(faktura, "id_faktury", wynik[0]["id_faktury"])
         setattr(faktura, "kurs_waluty", wynik[0]["kurs_waluty"])
         setattr(faktura, "status_platnosci", wynik[0]["status_platnosci"])

@@ -5,6 +5,12 @@ import faktury
 import waluty
 import wplaty
 
+# Cały moduł działa na uruchamianiu własnych menu w pętlach
+# Jest tak, aby osoba działająca np. ciągle w zakresie faktur
+# Nie musiała ciągle ich wybierać w menu, a automatycznie do niego wracała
+
+# Program w zależności od wyboru w menu wywołuje pojedynczą funkcję z końcowego modułu
+# Jest to zrobione w ramach czytelności i ułatwienia ewentualnych modyfikacji
 def zarzadzanie_fakturami():
     '''Interaktywne zarządzanie fakturami.'''
     system('cls')
