@@ -9,6 +9,7 @@ Program korzysta z kilku bibliotek, które nie są wbudowane w czystego Pythona.
 - **TinyDB** - obsługa minimalistycznych baz danych z plików .json
 - **Datetime** - walidacja wprowadzonych danych z zakresu dat
 
+Należy pobrać całe repozytorium, oraz pobrać powyższe zależności.\
 Przed pierwszym uruchomieniem programu niezbędne jest ich zainstalowanie, poprzez wykorzystanie pliku ***"setup/requirements.txt"***:
 
 `pip install -r setup/requirements.txt` lub `python -m pip install -r setup/requirements.txt`
