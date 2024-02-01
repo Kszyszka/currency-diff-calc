@@ -4,7 +4,7 @@
 **Autor:** Krzysztof Hager 52687
 
 ## Dokumentacja
-Dokumentacja jest dostępna w zasobie ***documentation***.
+Dokumentacja jest dostępna w zasobie ***documentation***, raport z zadania w zasobie ***raport***.
 
 ## Instalacja
 Program korzysta z kilku bibliotek, które nie są wbudowane w czystego Pythona.\
