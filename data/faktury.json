@@ -1,1 +1,1 @@
-{"_default": {"1": {"id_faktury": 0, "firma": "", "waluta": "", "data": "", "kwota_naleznosci": 0, "status_platnosci": 0, "kurs_waluty": 0}, "2": {"id_faktury": 1, "firma": "Dupa", "waluta": "USD", "data": "2024-01-31", "kwota_naleznosci": 20.0, "kurs_waluty": 3.9749, "status_platnosci": 79.5}}}
+{"_default": {}}

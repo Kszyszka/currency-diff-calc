@@ -16,7 +16,19 @@ class Wplata:
         self.data = data
         # Kurs oraz wartosc są zależne od API, ustawiane dynamicznie
         self.kurs = 0
-        self.wartosc_wplaty_pln = 0
+        self.wartosc_wplaty_pln = float(0)
+        
+        setattr(self, "id_wplaty", baza.id_wplaty())
+        setattr(self, "kurs", waluty.Waluta(self.waluta, self.data).rate)
+        
+        # Przeniesione z walidacji, ponieważ udawało się zapisać wpłaty pomimo błędów API
+        try:
+            self.wartosc_wplaty = float(self.wartosc_wplaty)
+            setattr(self, "wartosc_wplaty_pln", round(self.wartosc_wplaty * self.kurs, 2))
+        except TypeError:
+            print("Niepoprawna kwota faktury.")
+        except ValueError:
+            print("Niepoprawna kwota faktury.")
 
     def is_valid(self):
         '''Walidacja wszystkich wprowadzonych pól wpłaty.'''
@@ -39,7 +51,8 @@ class Wplata:
             self.wartosc_wplaty = float(self.wartosc_wplaty)
             self.wartosc_wplaty = float(self.wartosc_wplaty)
         except ValueError:
-            print("Niepoprawna kwota faktury.")
+            return 0
+        except TypeError:
             return 0
         if self.waluta not in ["USD", "EUR", "GBP"]:
             print("Niepoprawna waluta (IS0 4217). Program obsługuje waluty: USD, EUR, GBP.")

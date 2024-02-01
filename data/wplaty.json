@@ -1,1 +1,1 @@
-{"_default": {"1": {"id_wplaty": 0, "id_faktury": 0, "wartosc_wplaty": 0, "waluta": "", "data": "", "kurs": 0, "wartosc_wplaty_pln": 0}, "2": {"id_wplaty": 1, "id_oplacanej_faktury": 1, "wartosc_wplaty": 20.0, "waluta": "USD", "data": "2024-01-28", "kurs": 0, "wartosc_wplaty_pln": 0.0}}}
+{"_default": {}}
