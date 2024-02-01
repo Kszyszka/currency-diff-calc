@@ -128,7 +128,7 @@ def menu():
         system('cls')
         system('clear')
         print("Witaj w programie księgowym z funkcją obliczania róznic kursowych")
-        print("Autor: Krzysztof Hager 52687'")
+        print("Autor: Krzysztof Hager 52687")
 
         for item in opcje.items():
             print(item[1][0])
