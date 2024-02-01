@@ -71,18 +71,18 @@ def wyczysc_baze_faktur():
     decyzja = input("Czy na pewno chcesz wyczyścić bazę faktur? (TAK/NIE): ").lower()
     if decyzja == "tak":
         db_faktury.truncate()
-        print("Baza db_faktury (faktury.json) została wyczyszczona.")
+        print("Baza db_faktury (faktury.json) została wyczyszczona.\n")
     else:
-        print("Baza NIE została wyczyszczona.")
+        print("Baza NIE została wyczyszczona.\n")
 def wyczysc_baze_wplat():
     '''Wyczyszczenie całej bazy wpłat.'''
 
     decyzja = input("Czy na pewno chcesz wyczyścić bazę wpłat? (TAK/NIE): ").lower()
     if decyzja == "tak":
         db_wplaty.truncate()
-        print("Baza db_wplaty (wplaty.json) została wyczyszczona.")
+        print("Baza db_wplaty (wplaty.json) została wyczyszczona.\n")
     else:
-        print("Baza NIE została wyczyszczona.")
+        print("Baza NIE została wyczyszczona.\n")
 
 def wyszukaj_fakture(id_faktury_szukana):
     '''Wyszukanie konkretnej faktury po ID.'''

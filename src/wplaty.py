@@ -82,7 +82,7 @@ def wprowadzenie_wplaty():
             baza.oplac_fakture(wplata.id_faktury, wplata.wartosc_wplaty, wplata.wartosc_wplaty_pln, wplata.waluta, wplata.data, wplata.kurs)
             tabela = [["id_wplaty", "id_faktury", "wartosc_wplaty", "waluta", "data", "kurs", "wartosc_wplaty_pln"],
                       [wplata.id_wplaty, wplata.id_faktury, wplata.wartosc_wplaty, wplata.waluta, wplata.data, wplata.kurs, str(wplata.wartosc_wplaty) + " PLN"]]
-            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+            print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
             return wplata
         else:
             print("Coś poszło nie tak.")
@@ -135,7 +135,7 @@ def wyszukaj_wplate_po_id_faktury():
             setattr(wplata, "wartosc_wplaty_pln", i["wartosc_wplaty_pln"])
             tabela2 = [wplata.id_wplaty, wplata.id_faktury, wplata.wartosc_wplaty, wplata.waluta, wplata.data, wplata.kurs, str(wplata.wartosc_wplaty_pln) + " PLN"]
             tabela.append(tabela2)
-        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'))
+        print(tabulate(tabela, headers='firstrow', tablefmt='fancy_grid'),"\n")
     else:
         print("Nie znaleziono Wpłat o podanym ID Faktury.")
         return 0

@@ -36,14 +36,13 @@ class Faktura:
 
         print(f"Do zapłaty zostało: {self.status_platnosci}.")
         if self.status_platnosci == 0:
-            print(f"Faktura {self.id_faktury} jest opłacona. Nie zostało nic do spłaty.")
+            print(f"Faktura {self.id_faktury} jest opłacona. Nie zostało nic do spłaty.\n")
             return 1
         elif self.status_platnosci > 0:
-            print(f"Faktura {self.id_faktury} NIE jest opłacona, zostało {self.status_platnosci} PLN do zapłaty.")
+            print(f"Faktura {self.id_faktury} NIE jest opłacona, zostało {self.status_platnosci} PLN do zapłaty.\n")
             return 0
         elif self.status_platnosci < 0:
-            print(f"Faktura {self.id_faktury} jest nadpłacona o {self.status_platnosci*-1} PLN.")
-        print("\n")
+            print(f"Faktura {self.id_faktury} jest nadpłacona o {self.status_platnosci*-1} PLN.\n")
         return None
 
     def is_valid(self):
