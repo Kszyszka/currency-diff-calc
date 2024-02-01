@@ -3,6 +3,9 @@
 **currency-diff-calc** - Program księgowy z obsługą obliczania różnic kursowych.\
 **Autor:** Krzysztof Hager 52687
 
+## Dokumentacja
+Dokumentacja jest dostępna w zasobie ***documentation***.
+
 ## Instalacja
 Program korzysta z kilku bibliotek, które nie są wbudowane w czystego Pythona.\
 - **Tabulate** - pretty print tabeli
