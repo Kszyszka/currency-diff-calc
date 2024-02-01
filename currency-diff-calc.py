@@ -17,7 +17,7 @@ def main():
         print("\tnp.: python main.py -fF C:\\Users\\{username}\\faktury.csv\n")
         print("W przypadku złego podania argumentów lub ich braku, zostanie wywołany cały program w wersji interaktywnej.")
         return 1
-    if "-fF" in argumenty:
+    if "-fF" in argumenty or "--fileFaktura" in argumenty :
         try:
             plik = argumenty[argumenty.index("-fF") + 1]
         except IndexError:
@@ -41,7 +41,7 @@ def main():
         else:
             print("Program przyjmuje jedynie pliki .csv")
         return 1
-    if "-fW" in argumenty:
+    if "-fW" in argumenty or "--fileWplata" in argumenty:
         try:
             plik = argumenty[argumenty.index("-fW") + 1]
         except IndexError:

@@ -30,7 +30,7 @@ Tryb wsadowy wywołuje się poprzez uruchomienie programu wraz z jednym z argume
 
 - "-h" (--help) - wypisanie pomocy programu
 - "-fF" (--fileFaktura <plik.csv>) - masowe wprowadzenie nowych faktur z pliku .csv z podanej ścieżki
-- "-fW" (--fileWpłata <plik.csv>) - masowe wprowadzenie nowych wpłat z pliku .csv z podanej ścieżki
+- "-fW" (--fileWplata <plik.csv>) - masowe wprowadzenie nowych wpłat z pliku .csv z podanej ścieżki
 
 Np.: `python currency-diff-calc.py -fF faktury.csv` lub `python currency-diff-calc.py -fW C:\Users\<username>\Desktop\wplaty.csv`
 
