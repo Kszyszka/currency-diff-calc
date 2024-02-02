@@ -1,6 +1,8 @@
 '''Główny moduł programu.'''
 from sys import path, argv
-path.insert(1, "src") # Wymagane do spięcia reszty modułów, zignorowany Warning od Pylint
+import os
+#path.insert(1, "src") # Wymagane do spięcia reszty modułów, zignorowany Warning od Pylint
+path.insert(1, os.path.dirname(os.path.abspath(__file__)) + "/src")
 import menu
 
 

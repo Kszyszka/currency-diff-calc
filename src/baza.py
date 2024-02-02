@@ -1,10 +1,12 @@
 '''Moduł służący do obsługi baz danych.'''
 from tinydb import TinyDB, Query
 from tabulate import tabulate
+from sys import path
+import os
 
-# Globalna deklaracja baz
-db_faktury = TinyDB("data/faktury.json")
-db_wplaty = TinyDB("data/wplaty.json")
+# Globalna deklaracja baz              
+db_faktury = TinyDB(os.path.dirname(os.path.abspath(__file__)) + "/../data/faktury.json")
+db_wplaty = TinyDB(os.path.dirname(os.path.abspath(__file__)) + "/../data/wplaty.json")
 
 def id_faktury():
     '''Obsługuje pustą bazę, zwraca ostatnie ID faktury (klucz podstawowy).'''
